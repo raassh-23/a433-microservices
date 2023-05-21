@@ -1,0 +1,16 @@
+version: '3.7' # set docker-compose version
+services:
+  item-app:
+    image: ghcr.io/raassh-23/item-app:v1 # set image name for item-app
+    ports:
+      - 80:8080 # set port mapping for item-app
+    depends_on:
+      - item-db # set dependency on item-db
+    restart: always # always restart container
+  item-db:
+    image: mongo:3 # set image name for item-db
+    volumes:
+      - app-db:/data/db # set volume for item-db
+    restart: always # always restart container
+volumes:
+  app-db: # create volume app-db
