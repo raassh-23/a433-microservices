@@ -8,6 +8,5 @@ spec:
   ports:
     - port: 27017
   selector:
-    app: mongo
+    app: karsajobs
     tier: database
-  clusterIP: None
