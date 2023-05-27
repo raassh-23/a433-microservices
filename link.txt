@@ -1,0 +1,2 @@
+https://github.com/raassh-23/a433-microservices/pkgs/container/karsajobs
+https://github.com/raassh-23/a433-microservices/pkgs/container/karsajobs-ui
