@@ -1,25 +1,30 @@
-version: 2.1
+version: 2.1  # Specify the version of the configuration file.
+
 orbs:
-  docker: circleci/docker@2.2.0
+  docker: circleci/docker@2.2.0  # Declare the Docker orb and its version.
+
 jobs:
-  lint-dockerfile:
-    executor: docker/hadolint
+  lint-dockerfile:  # Define a job for linting the Dockerfile.
+    executor: docker/hadolint  # Use the docker/hadolint executor.
     steps:
-      - checkout
-      - docker/hadolint:
+      - checkout  # Fetch the source code.
+      - docker/hadolint:  # Run Hadolint on the Dockerfile.
           dockerfiles: Dockerfile
-  build-app-karsajobs-ui:
-    executor: docker/docker
+
+  build-app-karsajobs-ui:  # Define a job for building and pushing a UI Docker image.
+    executor: docker/docker  # Use the docker/docker executor.
     steps:
-      - checkout
-      - setup_remote_docker:
+      - checkout  # Fetch the source code.
+      - setup_remote_docker:  # Set up a remote Docker environment.
           version: default
-      - run: |
-          sh ./build_push_image_karsajobs_ui.sh
+      - run: | # Execute the shell script to build and push the UI Docker image.
+          sh ./build_push_image_karsajobs_ui.sh  
+
 workflows:
-  lint-dockerfile:
+  lint-dockerfile:  # Define a workflow for the lint-dockerfile job.
     jobs:
       - lint-dockerfile
-  build-app-karsajobs-ui:
+
+  build-app-karsajobs-ui:  # Define a workflow for the build-app-karsajobs-ui job.
     jobs:
       - build-app-karsajobs-ui
