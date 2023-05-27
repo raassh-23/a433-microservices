@@ -1,23 +1,23 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1  # Specify the Kubernetes API version for the Deployment
+kind: Deployment  # Specify the resource kind as Deployment
 metadata:
-  name: karsajobs-ui
+  name: karsajobs-ui  # Specify the name of the Deployment
   labels:
-    app: karsajobs
+    app: karsajobs  # Labels for the Deployment
     tier: frontend
 spec:
-  replicas: 1
+  replicas: 1  # Set the number of desired replicas
   selector:
     matchLabels:
-      tier: frontend
+      tier: frontend  # Match labels to target the pods
   template:
     metadata:
       labels:
-        app: karsajobs
+        app: karsajobs  # Labels for pods created by the Deployment
         tier: frontend
     spec:
       containers:
-        - name: karsajobs-ui
-          image: ghcr.io/raassh-23/karsajobs-ui:latest
+        - name: karsajobs-ui  # Specify the name of the container
+          image: ghcr.io/raassh-23/karsajobs-ui:latest  # Set the image for the container
           ports:
-            - containerPort: 8000
+            - containerPort: 8000  # Specify the container port to expose

@@ -1,11 +1,11 @@
-apiVersion: v1
-kind: Service
+apiVersion: v1  # Specify the Kubernetes API version for the Service
+kind: Service  # Specify the resource kind as Service
 metadata:
-  name: karsajobs-ui
+  name: karsajobs-ui  # Specify the name of the Service
   labels:
-    app: karsajobs
+    app: karsajobs  # Labels for the Service
 spec:
   ports:
-    - port: 8000
+    - port: 8000  # Specify the port on the Service
   selector:
-    tier: frontend
+    tier: frontend  # Match labels to target the pods

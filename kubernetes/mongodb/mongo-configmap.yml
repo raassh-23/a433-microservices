@@ -1,8 +1,8 @@
-apiVersion: v1
-kind: ConfigMap
+apiVersion: v1  # Specify the Kubernetes API version for the ConfigMap
+kind: ConfigMap  # Specify the resource kind as ConfigMap
 metadata:
-  name: mongo-config
+  name: mongo-config  # Specify the name of the ConfigMap
 data:
-  mongo.conf: |
+  mongo.conf: | # Specify the configuration data for the mongo.conf file
     storage:
       dbPath: /data/db
