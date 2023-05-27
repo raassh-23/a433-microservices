@@ -1,0 +1,35 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@2.2.0
+jobs:
+  lint-dockerfile:
+    executor: docker/hadolint
+    steps:
+      - checkout
+      - docker/hadolint:
+          dockerfiles: Dockerfile
+  test-app:
+    docker:
+      - image: cimg/go:1.20.4
+    steps:
+      - checkout
+      - run: |
+          go test -v -short --count=1 $(go list ./...)
+  build-app-karsajobs:
+    executor: docker/docker
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: default
+      - run: |
+          ./build_push_image_karsajobs.sh
+workflows:
+  lint-dockerfile:
+    jobs:
+      - lint-dockerfile
+  test-app:
+    jobs:
+      - test-app
+  build-app-karsajobs:
+    jobs:
+      - build-app-karsajobs
