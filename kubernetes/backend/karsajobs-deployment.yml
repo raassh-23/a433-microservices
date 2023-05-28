@@ -23,7 +23,7 @@ spec:
             - containerPort: 8080  # Specify the container port to expose
           env:
             - name: APP_PORT  # Set environment variable APP_PORT
-              value: 8080
+              value: "8080"
             - name: MONGO_HOST  # Set environment variable MONGO_HOST using the value from MONGO_SERVICE_HOST
               value: $(MONGO_SERVICE_HOST)
             - name: MONGO_USER  # Set environment variable MONGO_USER using the value from the secretKeyRef
