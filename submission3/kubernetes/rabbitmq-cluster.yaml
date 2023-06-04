@@ -1,0 +1,5 @@
+apiVersion: rabbitmq.com/v1beta1  # Specify the RabbitMQ API version
+kind: RabbitmqCluster  # Specify the resource kind as RabbitmqCluster
+metadata:
+    name: e-commerce-queue  # Specify the name of the RabbitMQ Cluster
+    

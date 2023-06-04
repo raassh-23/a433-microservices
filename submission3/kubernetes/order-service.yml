@@ -1,0 +1,58 @@
+apiVersion: v1 # Specify the API version
+kind: Service # Specify the resource kind as Service
+metadata:
+    name: order # Specify the name of the Service
+    labels:
+        app: order # Add labels to the Service for identification
+        service: order
+spec:
+    ports:
+        - port: 3000 # Specify the port to expose
+    selector:
+        app: order # Specify the selector for pods associated with this Service
+---
+apiVersion: apps/v1 # Specify the API version
+kind: Deployment # Specify the resource kind as Deployment
+metadata:
+    name: order # Specify the name of the Deployment
+    labels:
+        app: order # Add labels to the Deployment for identification
+spec:
+    replicas: 1 # Specify the number of replicas
+    selector:
+        matchLabels:
+            app: order # Specify the selector for pods managed by this Deployment
+    template:
+        metadata:
+            labels:
+                app: order # Add labels to the pods for identification
+        spec:
+            containers:
+                - name: order # Specify the container name
+                  image: ghcr.io/raassh-23/order-service:latest # Specify the container image
+                  imagePullPolicy: IfNotPresent # Specify the image pull policy
+                  ports:
+                      - containerPort: 3000 # Specify the container port to listen on
+                  env:
+                      - name: QUEUE_HOST # Specify environment variable name
+                        valueFrom:
+                            secretKeyRef:
+                                name: e-commerce-queue-default-user # Specify the secret name
+                                key: host # Specify the key in the secret
+                      - name: QUEUE_PORT # Specify environment variable name
+                        valueFrom:
+                            secretKeyRef:
+                                name: e-commerce-queue-default-user # Specify the secret name
+                                key: port # Specify the key in the secret
+                      - name: QUEUE_USERNAME # Specify environment variable name
+                        valueFrom:
+                            secretKeyRef:
+                                name: e-commerce-queue-default-user # Specify the secret name
+                                key: username # Specify the key in the secret
+                      - name: QUEUE_PASSWORD # Specify environment variable name
+                        valueFrom:
+                            secretKeyRef:
+                                name: e-commerce-queue-default-user # Specify the secret name
+                                key: password # Specify the key in the secret
+                      - name: AMQP_URL # Specify environment variable name
+                        value: "amqp://$(QUEUE_USERNAME):$(QUEUE_PASSWORD)@$(QUEUE_HOST):$(QUEUE_PORT)" # Specify the value of the environment variable

@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3 # Specify the Istio API version
+kind: Gateway # Specify the resource kind as Gateway
+metadata:
+    name: e-commerce-gateway # Specify the name of the Gateway
+spec:
+    selector:
+        istio: ingressgateway # Use the Istio default controller
+    servers:
+        - port:
+              number: 80 # Specify the port number
+              name: http # Specify the name of the port
+              protocol: HTTP # Specify the protocol
+          hosts:
+              - "*" # Specify the host to match
+---
+apiVersion: networking.istio.io/v1alpha3 # Specify the Istio API version
+kind: VirtualService # Specify the resource kind as VirtualService
+metadata:
+    name: e-commerce # Specify the name of the VirtualService
+spec:
+    hosts:
+        - "*" # Specify the host to match
+    gateways:
+        - e-commerce-gateway # Specify the Gateway to use
+    http:
+        - match:
+              - uri:
+                    exact: /order # Specify the exact URI match
+          route:
+              - destination:
+                    host: order # Specify the destination host
+                    port:
+                        number: 3000 # Specify the destination port number
